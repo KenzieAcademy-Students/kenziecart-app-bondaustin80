@@ -1,0 +1,46 @@
+@import 'custom.scss';
+
+.drawer-backdrop {
+  @include transition();
+
+  &.dark-overflow {
+    @include transition();
+  }
+}
+// mini cart
+.mini-cart {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  background-color: $white;
+  height: 100%;
+  width: 470px;
+  z-index: 1000;
+  // -webkit-box-shadow: $box-shadow;
+  // box-shadow: $box-shadow;
+  @include transition($layout-transition-higher-speed);
+
+  @include media-breakpoint-down(xs) {
+    width: 88%;
+    top: 0;
+  }
+}
+
+// show hidden cart popup
+.mini-cart-open {
+  .mini-cart {
+    visibility: visible;
+    right: 0;
+    transition: 0.6s;
+    @include transition($layout-transition-higher-speed);
+  }
+
+  .dark-overflow {
+    @include dark-overflow();
+    @include media-breakpoint-down(xs) {
+      width: 100%;
+      top: 0;
+    }
+  }
+}

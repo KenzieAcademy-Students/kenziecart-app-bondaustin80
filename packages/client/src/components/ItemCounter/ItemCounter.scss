@@ -1,0 +1,18 @@
+.quantity {
+  appearance: textfield;
+  border-color: var(--accents-2);
+  border-radius: 0.25rem;
+  border-width: 1px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  text-align: center;
+  width: 2rem;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

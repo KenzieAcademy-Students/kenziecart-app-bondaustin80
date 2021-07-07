@@ -1,0 +1,21 @@
+@import '_variables.scss';
+@import '_mixins.scss';
+
+// Override default variables before the import
+// $body-bg: #282c34;
+// $body-color: rgb(226, 177, 177);
+$font-family-base: 'Raleway', sans-serif;
+
+// To modify an existing color in Bootstrap $theme-colors map,
+// add the following to your custom Sass file:
+// https://getbootstrap.com/docs/4.0/getting-started/theming/
+$theme-colors: (
+  'primary': #FDC54C,
+  'secondary': #828282,
+  'selected': #95CEBE,
+  'info': #1D3868,
+  'danger': red,
+);
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';

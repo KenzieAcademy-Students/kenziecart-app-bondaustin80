@@ -1,0 +1,36 @@
+@import 'custom.scss';
+
+.item-box {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-bottom: $border-default;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .price {
+    font-size: $font-size-medium;
+  }
+
+  .item-details {
+    .item-image {
+      width: 80px;
+      border-radius: $border-radius-default;
+    }
+
+    .icon-trash {
+      color: $font-custom-color;
+      font-size: $font-size-xx-large;
+      cursor: pointer;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.quantity {
+  appearance: textfield;
+}

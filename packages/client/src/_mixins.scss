@@ -1,0 +1,20 @@
+// flexbox
+@mixin flex() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+// dark overflow
+@mixin dark-overflow {
+  background-color: $dark-overflow-bg;
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
