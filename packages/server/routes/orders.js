@@ -29,11 +29,13 @@ router
       items: itemIdList,
       orderTotal: orderTotal,
     }
+    console.log(itemIdList)
     try {
       /* create new order using Order model
         and return order ID
       */
-      res.json(orderData)
+      const order = new Order(orderData)
+      res.json(order._id)
     } catch (error) {
       next(new Error('Error Placing Order'))
     }
