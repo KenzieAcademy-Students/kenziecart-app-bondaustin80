@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, createContext } from 'react'
+import React, { useReducer, useContext, createContext, useEffect } from 'react'
 
 const initialState = {
   cart: [],
@@ -38,6 +38,8 @@ const reducer = (state, action) => {
         nextCart.push(action.payload)
       }
 
+      localStorage.setItem("KenzieCart", JSON.stringify(nextCart))
+
       return {
         ...state,
         cart: nextCart,
@@ -53,6 +55,8 @@ const reducer = (state, action) => {
         )
         .filter((item) => item.quantity > 0);
 
+        localStorage.setItem("KenzieCart", JSON.stringify(nextCart))
+
       return {
         ...state,
         cart: nextCart,
@@ -67,7 +71,31 @@ const reducer = (state, action) => {
         itemCount: state.itemCount > 0 ? state.itemCount - quantity : 0,
       }
     case 'RESET_CART':
+      localStorage.clear()
       return { ...initialState }
+    case 'LOAD_CART':
+      localStorage.getItem("KenzieCart")
+      return { ...state }
+    case 'UPDATE_CART':
+      localStorage.setItem("KenzieCart", JSON.stringify(nextCart))
+      return {
+        ...state,
+        cart: nextCart,
+        itemCount: nextCart.length,
+        cartTotal: calculateCartTotal(nextCart)
+      }
+    case 'INIT_SAVED_CART':
+      const savedCart = action.payload
+      let savedCount = 0
+      for (let i = 0; i < savedCart.length; i++) {
+        savedCount = savedCount + savedCart[i].quantity
+      }
+      return {
+        ...state,
+        cart: savedCart,
+        itemCount: savedCount,
+        cartTotal: calculateCartTotal(savedCart),
+      }
     default:
       return state
   }
@@ -79,6 +107,10 @@ const cartContext = createContext()
 // ... available to any child component that calls useCart().
 export function ProvideCart({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const savedCart = JSON.parse(localStorage.getItem('KenzieCart')) || false
+  if (!savedCart) {
+    localStorage.setItem("KenzieCart", JSON.stringify(state))
+  }
   return (
     <cartContext.Provider
       value={{
@@ -120,6 +152,9 @@ const useProvideCart = () => {
       type: 'REMOVE_ALL_ITEMS',
       payload: id,
     })
+    dispatch({
+      type: 'UPDATE_CART'
+    })
   }
 
   const resetCart = () => {
@@ -132,7 +167,19 @@ const useProvideCart = () => {
     return !!state.cart.find((item) => item._id === id)
   }
 
-  /*  Check for saved local cart on load and dispatch to set initial state
+  const loadCart = () => {
+    dispatch({
+      type: "LOAD_CART",
+    })
+  }
+
+  const updateCart = () => {
+    dispatch({
+      type: "UPDATE_CART"
+    })
+  }
+
+  //  Check for saved local cart on load and dispatch to set initial state
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('KenzieCart')) || false
     if (savedCart) {
@@ -141,7 +188,7 @@ const useProvideCart = () => {
         payload: savedCart,
       })
     }
-  }, [dispatch]) */
+  }, [dispatch])
 
   return {
     state,
@@ -151,6 +198,8 @@ const useProvideCart = () => {
     resetCart,
     isItemInCart,
     calculateCartTotal,
+    loadCart,
+    updateCart,
   }
 }
 
