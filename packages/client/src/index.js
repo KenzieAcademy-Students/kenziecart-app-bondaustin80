@@ -6,9 +6,11 @@ import { ManagedUIContext } from 'hooks/useUI'
 import { ProvideCart } from 'hooks/useCart'
 import reportWebVitals from 'reportWebVitals'
 import './index.scss'
+import { ManageCurrencyContext } from 'hooks/useCurrency'
 
 ReactDOM.render(
   <React.StrictMode>
+    <ManageCurrencyContext>
     <ManagedUIContext>
       <ProvideCart>
         <AppRouter>
@@ -16,6 +18,7 @@ ReactDOM.render(
         </AppRouter>
       </ProvideCart>
     </ManagedUIContext>
+    </ManageCurrencyContext>
   </React.StrictMode>,
   document.getElementById('root')
 )

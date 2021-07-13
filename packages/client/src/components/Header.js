@@ -1,13 +1,20 @@
 import React from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
+import { DropdownButton, Dropdown } from 'react-bootstrap'
 import { Navbar, Nav, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
-import { useUI, useProvideCart } from 'hooks'
+import { useUI, useProvideCart, useCurrency } from 'hooks'
 import CartSidebar from 'components/CartSidebar'
 export default function Header() {
   const { openSidebar } = useUI()
   const { state } = useProvideCart()
+  const { setCurrency } = useCurrency()
+
+  const handleCurrencyType = (currency) => {
+    console.log(currency)
+    setCurrency(currency)
+  }
 
   return (
     <>
@@ -39,6 +46,10 @@ export default function Header() {
                 </Badge>
               )}
             </div>
+            <DropdownButton title="Select Currency">
+              <Dropdown.Item value="USD" onClick={(e) => handleCurrencyType(e.target.innerText)}>USD</Dropdown.Item>
+              <Dropdown.Item value="Euro" onClick={(e) => handleCurrencyType(e.target.innerText)}>Euro</Dropdown.Item>
+            </DropdownButton>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

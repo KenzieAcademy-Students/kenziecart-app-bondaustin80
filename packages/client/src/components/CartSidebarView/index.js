@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { useUI } from 'hooks'
-import { useProvideCart, useRouter } from 'hooks'
+import { useProvideCart, useRouter, useCurrency } from 'hooks'
 import { CartList, CartSummary, CheckoutBox } from 'components'
 import './CartSidebarView.scss'
 
@@ -11,6 +11,7 @@ const CartSidebarView = () => {
   const { closeSidebar, displaySidebar } = useUI()
   const { state } = useProvideCart()
   const { push } = useRouter()
+  const { getPrice } = useCurrency()
 
   const handleClose = () => closeSidebar()
   const handleCheckout = () => {
@@ -45,7 +46,7 @@ const CartSidebarView = () => {
 
       {state.cart.length > 0 && (
         <div className='cart-checkout'>
-          <CartSummary cartTotal={state.cartTotal} />
+          <CartSummary cartTotal={getPrice(state.cartTotal)} />
           <CheckoutBox
             handleShopping={handleClose}
             handleCheckout={handleCheckout}
