@@ -17,10 +17,12 @@ export default function CheckoutPage(props) {
 
   const placeOrder = async (orderFormData) => {
     console.log('handlePlaceOrder', orderFormData)
+    console.log(state)
     let orderData = {
       customerDetails: orderFormData,
       items: state.cart,
-      orderTotal: calculateCartTotal(),
+      orderTotal: calculateCartTotal(state.cart),
+      couponCode: state.couponName,
     }
     setData({
       ...data,
