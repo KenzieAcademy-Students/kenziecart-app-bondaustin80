@@ -4,10 +4,14 @@ const initialState = {
   cart: [],
   itemCount: 0,
   cartTotal: 0,
+  couponName: "",
+  discount: 1,
 }
 
 const calculateCartTotal = (cartItems) => {
   let total = 0
+
+  console.log(cartItems)
 
   cartItems.map((item) => (total += item.price * item.quantity))
 
@@ -45,6 +49,8 @@ const reducer = (state, action) => {
         cart: nextCart,
         itemCount: state.itemCount + numItemsToAdd,
         cartTotal: calculateCartTotal(nextCart),
+        couponName: state.couponName,
+        discount: state.discount,
       }
     case 'REMOVE_ITEM':
       nextCart = nextCart
@@ -62,6 +68,8 @@ const reducer = (state, action) => {
         cart: nextCart,
         itemCount: state.itemCount > 0 ? state.itemCount - 1 : 0,
         cartTotal: calculateCartTotal(nextCart),
+        couponName: state.couponName,
+        discount: state.discount,
       }
     case 'REMOVE_ALL_ITEMS':
       let quantity = state.cart.find((i) => i._id === action.payload).quantity
@@ -82,7 +90,9 @@ const reducer = (state, action) => {
         ...state,
         cart: nextCart,
         itemCount: nextCart.length,
-        cartTotal: calculateCartTotal(nextCart)
+        cartTotal: calculateCartTotal(nextCart),
+        couponName: state.couponName,
+        discount: state.discount,
       }
     case 'INIT_SAVED_CART':
       const savedCart = action.payload
@@ -95,6 +105,16 @@ const reducer = (state, action) => {
         cart: savedCart,
         itemCount: savedCount,
         cartTotal: calculateCartTotal(savedCart),
+      }
+    case 'APPLY_COUPON':
+      const couponName = action.payload.couponCode
+      console.log(couponName)
+      const discount = action.payload.discount
+      console.log(discount)
+      return {
+        ...state,
+        couponName: couponName,
+        discount: discount,
       }
     default:
       return state
@@ -179,15 +199,22 @@ const useProvideCart = () => {
     })
   }
 
+  const applyCoupon = (coupon) => {
+    dispatch({
+      type: "APPLY_COUPON",
+      payload: coupon,
+    })
+  }
+
   //  Check for saved local cart on load and dispatch to set initial state
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('KenzieCart')) || false
-    if (savedCart) {
+    if (savedCart.cart) {
       dispatch({
         type: 'INIT_SAVED_CART',
-        payload: savedCart,
-      })
-    }
+        payload: savedCart.cart,
+      }) 
+      }
   }, [dispatch])
 
   return {
@@ -200,6 +227,7 @@ const useProvideCart = () => {
     calculateCartTotal,
     loadCart,
     updateCart,
+    applyCoupon,
   }
 }
 

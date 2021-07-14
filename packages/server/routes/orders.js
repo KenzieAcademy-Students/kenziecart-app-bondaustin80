@@ -19,6 +19,7 @@ router
       customerDetails: { firstName, lastName, email, address1, address2 },
       items,
       orderTotal,
+      couponCode,
     } = req.body
     const itemIdList = items.map((i) => i._id)
     const orderData = {
@@ -28,6 +29,7 @@ router
       customerAddress2: address2,
       items: itemIdList,
       orderTotal: orderTotal,
+      couponCode: couponCode,
     }
     console.log(itemIdList)
     try {
@@ -35,6 +37,7 @@ router
         and return order ID
       */
       const order = new Order(orderData)
+      console.log(order)
       res.json(order._id)
     } catch (error) {
       next(new Error('Error Placing Order'))
