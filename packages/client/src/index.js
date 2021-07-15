@@ -11,13 +11,13 @@ import { ManageCurrencyContext } from 'hooks/useCurrency'
 ReactDOM.render(
   <React.StrictMode>
     <ManageCurrencyContext>
-    <ManagedUIContext>
-      <ProvideCart>
-        <AppRouter>
-          <App />
-        </AppRouter>
-      </ProvideCart>
-    </ManagedUIContext>
+      <ManagedUIContext>
+        <ProvideCart>
+          <AppRouter>
+            <App />
+          </AppRouter>
+        </ProvideCart>
+      </ManagedUIContext>
     </ManageCurrencyContext>
   </React.StrictMode>,
   document.getElementById('root')
