@@ -129,7 +129,7 @@ export function ProvideCart({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const savedCart = JSON.parse(localStorage.getItem('KenzieCart')) || false
   if (!savedCart) {
-    localStorage.setItem("KenzieCart", JSON.stringify(state))
+    localStorage.setItem("KenzieCart", JSON.stringify(state.cart))
   }
   return (
     <cartContext.Provider
@@ -209,10 +209,10 @@ const useProvideCart = () => {
   //  Check for saved local cart on load and dispatch to set initial state
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('KenzieCart')) || false
-    if (savedCart.cart) {
+    if (savedCart) {
       dispatch({
         type: 'INIT_SAVED_CART',
-        payload: savedCart.cart,
+        payload: savedCart,
       }) 
       }
   }, [dispatch])
