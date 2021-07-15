@@ -7,13 +7,13 @@ router.get("/create", async (req, res) => {
     const couponCode = req.query.couponCode
     const discount = req.query.discount
 
-    const coupon = new Coupon(
-    {
+    const coupon = new Coupon({
         couponCode,
         discount,
     })
     try {
         const result = await coupon.save()
+        console.log(result)
         return res.json(result)
     } catch (error) {
         console.log(error)

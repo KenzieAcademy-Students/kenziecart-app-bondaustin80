@@ -9,7 +9,7 @@ import { ItemCounter } from 'components'
 
 export default function CartItem({ item }) {
   const { closeSidebar } = useUI()
-  const { removeAllItems } = useProvideCart()
+  const { removeAllItems} = useProvideCart()
   const { getPrice } = useCurrency()
 
   return (

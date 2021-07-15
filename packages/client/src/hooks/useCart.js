@@ -5,7 +5,7 @@ const initialState = {
   itemCount: 0,
   cartTotal: 0,
   couponName: "",
-  discount: 1,
+  discount: 0,
 }
 
 const calculateCartTotal = (cartItems) => {

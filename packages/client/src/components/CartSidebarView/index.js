@@ -72,7 +72,7 @@ const CartSidebarView = () => {
 
       {state.cart.length > 0 && (
         <div className='cart-checkout'>
-          <CartSummary cartTotal={getPrice(state.cartTotal)} />
+          <CartSummary cartTotal={getPrice(state.cartTotal - (state.cartTotal * state.discount))} />
           <CheckoutBox
             handleShopping={handleClose}
             handleCheckout={handleCheckout}
